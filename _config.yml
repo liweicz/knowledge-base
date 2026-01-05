@@ -1,0 +1,20 @@
+title: 知识库
+description: 公司内网手册（SOP / 设备 / 培训）
+theme: just-the-docs
+
+# 下面这两行请按你的仓库来改：
+url: "https://liweicz.github.io"
+baseurl: "/knowledge-base"
+
+# 开启左侧导航
+just_the_docs:
+  # 如果你想要顶部搜索，设为 true（推荐）
+  search_enabled: true
+
+# 让 Markdown 链接更稳定
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# （可选）让页面 URL 更好看
+permalink: pretty
