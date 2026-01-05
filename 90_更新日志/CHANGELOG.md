@@ -22,3 +22,9 @@
 **c89567c - Add initial configuration for knowledge base site**
 
 - _config.yml
+
+## 2026-01-05 20:36 UTC
+
+**39a795c - Add homepage and navigation for company manual**
+
+- index.md
