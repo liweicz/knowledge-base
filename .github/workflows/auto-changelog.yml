@@ -1,0 +1,44 @@
+name: Auto Update CHANGELOG
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+
+jobs:
+  changelog:
+    # 避免机器人自己的提交再次触发（死循环）
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Append to CHANGELOG
+        run: |
+          mkdir -p "90_更新日志"
+          touch "90_更新日志/CHANGELOG.md"
+
+          DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
+          COMMIT=$(git log -1 --pretty=format:"%h - %s")
+          FILES=$(git diff --name-only HEAD~1 HEAD | sed 's/^/- /')
+
+          {
+            echo ""
+            echo "## ${DATE}"
+            echo ""
+            echo "**${COMMIT}**"
+            echo ""
+            echo "${FILES}"
+          } >> "90_更新日志/CHANGELOG.md"
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "90_更新日志/CHANGELOG.md"
+          git commit -m "🤖 自动更新更新日志" || exit 0
+          git push
